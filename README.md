@@ -87,11 +87,14 @@ We now release the configs on these datasets:
  - The code will generate colored 3D mesh in .obj format in the log folder 
 
 ## Acknowledgements
-Thanks for the following project for their valuable contributions:
+Most of the code in this project are based on the following GitHub repositories
 - [Segment Anything in 3D with NeRFs](https://github.com/Jumpat/SegmentAnythingin3D)
 - [Mobile SAM](https://github.com/ChaoningZhang/MobileSAM.git)
 - [Segment Anything](https://github.com/facebookresearch/segment-anything)
 - [DVGO](https://github.com/sunset1995/DirectVoxGO)
 - [Grounding DINO](https://github.com/IDEA-Research/GroundingDINO.git)
+
+Mesh extraction code is the modified version from the following Github repo 
+- [nerfmeshes](https://github.com/qway/nerfmeshes.git)
 
 
