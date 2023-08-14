@@ -16,7 +16,7 @@ With input prompts, Mobile SAM cuts out the target object from the according vie
 git clone https://github.com/ShrikanthX/Update_of_SA3D.git
 cd Update_of_SA3D
 
-conda create -n sa3d python=3.10
+conda create -n sa3d -c conda-forge colmap python==3.10
 pip install -r requirements.txt
 ```
 
@@ -84,7 +84,52 @@ We now release the configs on these datasets:
   ```bash
   python mesh_nerf.py --config configs/nerf_unbounded/seg_bonsai.py --center -0.0858 -0.6554 0.2442  --limit .9
   ```
- - The code will generate colored 3D mesh in .obj format in the log folder 
+ - The code will generate a colored 3D mesh in .obj format in the log folder
+
+
+ ## Using a Custom dataset
+- Choose a static object which you want to use (e.g a small toy)
+- Take photos covering 360 degrees of the object in an orbital way (at least 50 images are preferred)
+- Put all the images into a folder images/source under the tools folder like below
+        <details>
+          <summary> (click to expand) </summary>
+        
+            tools
+            ├── images            
+            │   └── source
+            │       └── [image_1|image_2|image_3|images_4......]
+            
+        </details>
+
+- Extract camera poses using COLMAP.
+  ```bash
+  cd tools
+  python imgs2poses.py  images
+  ```
+- Copy the 'dense' folder created inside the images folder and paste it in data/360_v2.
+- Rename dense folder to a name as per the subject in the photo. e.g toy. Your folder should look like below
+    <details>
+      <summary> (click to expand) </summary>
+
+                data
+                ├── 360_v2             # Link: https://jonbarron.info/mipnerf360/
+                │   └── [toy]
+                │       ├── poses_bounds.npy
+                │       └── [images|images_2|images_4|images_8]
+                
+    </details>
+- Now create a copy of any of the existing config file in config/nerf_unbounded and rename it to the same name as before e.g 'toy.py'
+- Create a copy of any of the existing seg_config file in config/nerf_unbounded and rename it e.g 'seg_toy.py'
+- Train with 
+  ```bash
+  python run.py --config=configs/nerf_unbounded/toy.py --stop_at=20000 --render_video --i_weights=10000
+  ```
+  and - Run SA3D with mobile_SAM in GUI
+  ```bash
+  python run_seg_gui.py --config=configs/nerf_unbounded/seg_toy.py --segment \
+  --sp_name=_gui --num_prompts=20 \
+  --render_opt=train --save_ckpt --mobile_sam
+  ```
 
 ## Acknowledgements
 Most of the code in this project are based on the following GitHub repositories
