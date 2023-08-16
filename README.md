@@ -1,12 +1,12 @@
 # An Extension of Segment Anything in 3D with NeRFs (SA3D)
 
-This project is an extension of the implementation of the paper 'Segment Anything in 3D with Nerfs'.
-This has [MobileSAM](https://github.com/ChaoningZhang/MobileSAM) as the segmentation network and 3D colored mesh extraction option available.The ideas is to experiment the viability of this pipeline in an animation production environment for asset development.
+This project is an unofficial extension to the implementation of 'Segment Anything in 3D with NeRFs' paper.
+This has [MobileSAM](https://github.com/ChaoningZhang/MobileSAM) as the segmentation network and 3D colored mesh extraction option available. This project is for  experimenting the viability of this pipeline in an animation production environment for 3D asset development.
 
 
 ## Overall Pipeline
 
-With input prompts, Mobile SAM cuts out the target object from the according view. The obtained 2D segmentation mask is projected onto 3D mask grids via density-guided inverse rendering. 2D masks from other views are then rendered, which are mostly uncompleted but used as cross-view self-prompts to be fed into SAM again. Complete masks can be obtained and projected onto mask grids. This procedure is executed via an iterative manner while accurate 3D masks can be finally learned. The script mesh_nerf.py extracts the colored 3D mesh as .obj file.
+Given a set of images and camera pose file , with input prompts, Mobile SAM cuts out the target object from the according view. The obtained 2D segmentation mask is projected onto 3D mask grids via density-guided inverse rendering. 2D masks from other views are then rendered, which are mostly uncompleted but used as cross-view self-prompts to be fed into SAM again. Complete masks can be obtained and projected onto mask grids. This procedure is executed via an iterative manner while accurate 3D masks can be finally learned. The script mesh_nerf.py extracts the colored 3D mesh as .obj file.
 
 
 ## Installation
@@ -15,14 +15,14 @@ With input prompts, Mobile SAM cuts out the target object from the according vie
 git clone https://github.com/ShrikanthX/Update_of_SA3D.git
 cd Update_of_SA3D
 
-conda create -n sa3d -c conda-forge colmap python==3.10    # COLMAP for generating camera poses from custom datasets
+conda create -n sa3d -c conda-forge colmap python==3.10    # COLMAP required for generating camera poses from custom datasets
 pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 pip install torch-scatter -f https://data.pyg.org/whl/torch-2.0.0+${CUDA}.html
 pip install -r requirements.txt
 
 ```
 
-### Install SAM , mobile SAM and Grounding-DINO:
+### Install SAM, mobile SAM and Grounding-DINO:
 
 ```
 # Installing SAM
